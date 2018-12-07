@@ -1,2 +1,25 @@
 ---
 # tasks file for app-tier
+- name: install tomcat and apache
+  yum:
+    name:
+      - tomcat
+      - httpd
+    state: latest
+- name: create tomcat directory
+  file:
+    path: /usr/share/tomcat/webapps/ROOT
+    state: directory
+- name: copy index.html to tomcat webapps/ROOT/index.html
+  template:
+    src: index.html.j2
+    dest: /usr/share/tomcat/webapps/ROOT/index.html
+    mode: 0644
+- name: start services and enable at boot
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - tomcat
+    - httpd

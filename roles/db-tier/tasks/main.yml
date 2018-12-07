@@ -1,2 +1,13 @@
 ---
 # tasks file for db-tier
+
+- name: Defeasance requiretty
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^Defaults    requiretty'
+    line: 'Defaults:cloud-user !requiretty'
+
+- name: Import ansible-galaxy postgresql playbook
+  import_role:
+    name: geerlingguy.postgresql

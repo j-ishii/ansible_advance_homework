@@ -1,2 +1,7 @@
 ---
 # tasks file for base-config
+- name: Enable repository
+  template:
+    src: internal.repo
+    dest: /etc/yum.repos.d/internal.repo
+    mode: 0644

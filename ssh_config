@@ -1,0 +1,14 @@
+Host workstation workstation-fc07.rhpds.opentlc.com
+  Hostname workstation-fc07.rhpds.opentlc.com
+  User cloud-user 
+  IdentityFile ~/.ssh/openstack.pem
+  ForwardAgent yes
+  ControlMaster auto
+  ControlPath /tmp/%h-%r
+  ControlPersist 5m
+
+Host 10.10.10.*
+  ProxyJump workstation
+  User cloud-user
+  IdentityFile ~/.ssh/test_id_rsa
+  RequestTTY auto

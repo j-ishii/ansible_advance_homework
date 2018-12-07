@@ -1,10 +1,51 @@
 ---
 
 # tasks file for osp.servers
-- name: Create new server instances and attaches them a network and passes metadata to the instance
 
+- name: Create new server instances and attaches them a network and passes metadata to the instance
+  os_server:
+    cloud: ospcloud
+    state: "{{ server.value.state }}"
+    image: "{{ server.value.image }}" 
+    name: "{{ server.value.name }}"
+    meta: "{{ server.value.meta[0] }}"
+    flavor: "{{ server.value.flavor }}"
+    key_name: "{{ server.value.key_name }}"
+    network: "int_network"
+    security_groups: "{{ server.value.security_group }}"
+  with_dict: "{{ osp_servers }}"
+  loop_control:
+    loop_var: server
 
 - name: Add floating IP to Servers
-   
+  os_floating_ip:
+    cloud: ospcloud
+    server: "{{ server.value.name }}"
+    state: "{{ server.value.state }}"
+    network: ext_network
+    reuse: yes
+    wait: yes
+  register: fip_result
+  with_dict: "{{ osp_servers }}"
+  loop_control:
+    loop_var: server
 
-- name: Wait for server to be available
+- name: Check server status
+  os_server_facts:
+    cloud: ospcloud
+    server: "{{ server.value.name }}"
+  register: result
+  until: ansible_facts.openstack_servers[0].status == "ACTIVE"
+  retries: 5
+  delay: 30
+  with_dict: "{{ osp_servers }}"
+  loop_control:
+    loop_var: server
+
+- name: Wait for server to be available 
+  wait_for:
+    host: "{{ item.floating_ip.floating_ip_address }}"
+    port: 22
+    state: started
+    delay: 30
+  loop: "{{ fip_result.results }}"
