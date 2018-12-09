@@ -1,11 +1,11 @@
 ---
 # tasks file for app-tier
 - name: install tomcat and apache
-  yum:
+  package:
     name:
       - tomcat
       - httpd
-    state: latest
+    state: present
 - name: create tomcat directory
   file:
     path: /usr/share/tomcat/webapps/ROOT

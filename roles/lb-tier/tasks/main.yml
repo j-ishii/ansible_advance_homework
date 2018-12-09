@@ -1,9 +1,9 @@
 ---
 # tasks file for lb-tier
 - name: install haproxy
-  yum:
+  package:
     name: haproxy
-    state: latest
+    state: present
 - name: enable haproxy
   service:
     name: haproxy
