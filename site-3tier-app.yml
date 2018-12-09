@@ -3,7 +3,6 @@
   gather_facts: true
   roles:
   - name: osp-facts
-  when: target == 'QA'
 
 # Setup front-end load balancer tier
 

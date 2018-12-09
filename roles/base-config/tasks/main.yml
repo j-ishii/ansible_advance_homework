@@ -5,4 +5,7 @@
     src: internal.repo
     dest: /etc/yum.repos.d/internal.repo
     mode: 0644
-  when: target == 'QA'
+
+- name: Enable internal repository
+  yum_repository:
+    name: internal
