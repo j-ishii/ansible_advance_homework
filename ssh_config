@@ -10,5 +10,5 @@ Host workstation workstation-ae5e.rhpds.opentlc.com
 Host 10.10.10.*
 #  Proxyjump workstation
   User cloud-user
-  IdentityFile ~/.ssh/test_id_rsa
+  IdentityFile /root/.ssh/test_id_rsa
   ProxyCommand ssh -W %h:%p -F ssh_config workstation
