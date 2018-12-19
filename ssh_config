@@ -1,5 +1,5 @@
-Host workstation workstation-ae5e.rhpds.opentlc.com
-  Hostname workstation-ae5e.rhpds.opentlc.com
+Host workstation workstation-90ac.rhpds.opentlc.com
+  Hostname workstation-90ac.rhpds.opentlc.com
   User cloud-user 
   IdentityFile ~/.ssh/openstack.pem
   ForwardAgent yes
